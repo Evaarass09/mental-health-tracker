@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Catat Mood</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>😊 Catat Mood Harian</h1>
+
+<p>
+
+Bagaimana perasaanmu hari ini?
+
+Catat mood dan aktivitasmu agar kamu bisa memantau
+
+perkembangan kesehatan mental setiap hari.
+
+</p>
+
+<form id="formMood">
+
+<label>Tanggal</label>
+
+<input
+type="date"
+id="tanggal"
+required>
+
+<label>Mood Hari Ini</label>
+
+<select id="mood">
+
+<option>😊 Bahagia</option>
+
+<option>😁 Senang</option>
+
+<option>😐 Biasa</option>
+
+<option>😢 Sedih</option>
+
+<option>😰 Cemas</option>
+
+<option>😡 Marah</option>
+
+</select>
+
+<label>Tingkat Stress (1 - 10)</label>
+
+<input
+type="number"
+id="stress"
+min="1"
+max="10"
+required>
+
+<label>Catatan</label>
+
+<textarea
+id="catatan"
+rows="6"
+placeholder="Tuliskan apa yang kamu rasakan hari ini..."></textarea>
+
+<button
+type="button"
+onclick="simpanMood()">
+
+💾 Simpan Mood
+
+</button>
+
+</form>
+
+<br>
+
+<a href="dashboard.html">
+
+<button>
+
+⬅ Kembali ke Dashboard
+
+</button>
+
+</a>
+
+<footer>
+
+<hr><br>
+
+<p>
+
+© 2026 Mental Health Tracker
+
+</p>
+
+<p>
+
+Project Struktur Data & Algoritma
+
+</p>
+
+</footer>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>

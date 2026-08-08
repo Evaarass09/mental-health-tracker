@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Mental Health Tracker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(180deg,#FFF7FB,#FDEFF7,#F9E7F4);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+    background:#ffffff;
+    border-radius:30px;
+    padding:25px;
+    box-shadow:0 12px 30px rgba(233,30,99,.10);
+}
+
+.header{
+    background: linear-gradient(135deg,#F8BBD0,#F48FB1);
+    border-radius:22px;
+    padding:22px;
+    color:white;
+    margin-bottom:22px;
+}
+
+.header h2{
+    font-size:26px;
+    margin-bottom:6px;
+}
+
+.header p{
+    opacity:.95;
+}
+
+.streak{
+    margin-top:14px;
+    display:inline-block;
+    background:rgba(255,255,255,.25);
+    padding:10px 16px;
+    border-radius:14px;
+    font-weight:bold;
+}
+
+.menu{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.menu a{
+    text-decoration:none;
+}
+
+.card{
+    background:#FFF5F8;
+    border:1px solid #F8D7E6;
+    border-radius:22px;
+    padding:22px 16px;
+    text-align:center;
+    transition:.25s;
+    min-height:150px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 20px rgba(244,143,177,.18);
+}
+
+.icon{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+.card h4{
+    color:#6D4C57;
+    font-size:22px;
+    margin-bottom:6px;
+}
+
+.card p{
+    color:#8C6C79;
+    font-size:14px;
+    line-height:1.4;
+}
+
+.logout{
+    margin-top:26px;
+}
+
+.logout button{
+    width:100%;
+    background:#F48FB1;
+    color:white;
+    border:none;
+    padding:16px;
+    border-radius:16px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.logout button:hover{
+    background:#EC6F9D;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2 id="namaUser">Halo, Pengguna 🌸</h2>
+        <p>Selamat datang di Mental Health Tracker</p>
+
+        <div class="streak">
+            🔥 Streak <span id="streak">0</span> Hari
+        </div>
+    </div>
+
+    <div class="menu">
+
+        <a href="mood.html">
+            <div class="card">
+                <div class="icon">📝</div>
+                <h4>Catat Mood</h4>
+                <p>Simpan perasaan harian</p>
+            </div>
+        </a>
+
+        <a href="history.html">
+            <div class="card">
+                <div class="icon">📚</div>
+                <h4>Riwayat Mood</h4>
+                <p>Lihat semua mood</p>
+            </div>
+        </a>
+
+        <a href="statistik.html">
+            <div class="card">
+                <div class="icon">📊</div>
+                <h4>Statistik Mood</h4>
+                <p>Grafik & analisis</p>
+            </div>
+        </a>
+
+        <a href="graph.html">
+            <div class="card">
+                <div class="icon">🕸️</div>
+                <h4>Graph Aktivitas</h4>
+                <p>BFS & DFS</p>
+            </div>
+        </a>
+
+        <a href="meditasi.html">
+            <div class="card">
+                <div class="icon">🧘</div>
+                <h4>Meditasi</h4>
+                <p>Relaksasi & pernapasan</p>
+            </div>
+        </a>
+
+        <a href="musik.html">
+            <div class="card">
+                <div class="icon">🎧</div>
+                <h4>Musik</h4>
+                <p>Suara relaksasi</p>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="logout">
+        <button onclick="logout()">🚪 Logout</button>
+    </div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+<script>
+// Menampilkan nama pengguna
+let nama = localStorage.getItem("username") || "Pengguna";
+document.getElementById("namaUser").innerHTML = "Halo, " + nama + " 🌸";
+
+// Menghitung streak otomatis
+function hitungStreak() {
+    let dataMood = JSON.parse(localStorage.getItem("mood")) || [];
+
+    if (dataMood.length === 0) return 0;
+
+    let tanggalUnik = [...new Set(dataMood.map(item => item.tanggal))];
+    tanggalUnik.sort();
+
+    let streak = 1;
+
+    for (let i = tanggalUnik.length - 1; i > 0; i--) {
+        let t1 = new Date(tanggalUnik[i]);
+        let t2 = new Date(tanggalUnik[i - 1]);
+
+        let selisih = (t1 - t2) / (1000 * 60 * 60 * 24);
+
+        if (selisih === 1) {
+            streak++;
+        } else {
+            break;
+        }
+    }
+
+    return streak;
+}
+
+document.getElementById("streak").innerHTML = hitungStreak();
+
+// Logout
+function logout() {
+    localStorage.removeItem("username");
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

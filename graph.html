@@ -1,0 +1,211 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graph Self Care</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.graph-container{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:30px;
+
+}
+
+.graph{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:25px;
+
+}
+
+.row{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:60px;
+
+}
+
+.node{
+
+width:140px;
+
+height:60px;
+
+background:#FF69B4;
+
+color:white;
+
+border-radius:40px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-weight:bold;
+
+box-shadow:0 8px 15px rgba(0,0,0,.2);
+
+}
+
+.line{
+
+font-size:30px;
+
+color:#888;
+
+}
+
+#hasil{
+
+margin-top:30px;
+
+padding:20px;
+
+background:#FFF0F6;
+
+border-radius:15px;
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#E91E63;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🕸 Graph Self-Care</h1>
+
+<p>
+
+Graph berikut menunjukkan hubungan antar aktivitas
+yang direkomendasikan untuk menjaga kesehatan mental.
+
+</p>
+
+<div class="graph-container">
+
+<div class="graph">
+
+<div class="row">
+
+<div class="node">😊 Mood</div>
+
+</div>
+
+<div class="line">⬇</div>
+
+<div class="row">
+
+<div class="node">🧘 Meditasi</div>
+
+<div class="node">🎵 Musik</div>
+
+</div>
+
+<div class="line">⬇</div>
+
+<div class="row">
+
+<div class="node">🚶 Jalan</div>
+
+<div class="node">📚 Membaca</div>
+
+</div>
+
+<div class="line">⬇</div>
+
+<div class="row">
+
+<div class="node">😴 Tidur</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<button onclick="jalankanBFS()">
+
+▶ Jalankan BFS
+
+</button>
+
+<button onclick="jalankanDFS()">
+
+▶ Jalankan DFS
+
+</button>
+
+<div id="hasil">
+
+Klik tombol BFS atau DFS
+
+</div>
+
+<br>
+
+<a href="dashboard.html">
+
+<button>
+
+⬅ Kembali
+
+</button>
+
+</a>
+
+<script>
+
+function jalankanBFS(){
+
+document.getElementById("hasil").innerHTML=
+
+"🟢 BFS : Mood ➜ Meditasi ➜ Musik ➜ Jalan ➜ Membaca ➜ Tidur";
+
+}
+
+function jalankanDFS(){
+
+document.getElementById("hasil").innerHTML=
+
+"🔴 DFS : Mood ➜ Meditasi ➜ Jalan ➜ Tidur ➜ Musik ➜ Membaca";
+
+}
+
+</script>
+
+</div>
+
+</body>
+
+</html>

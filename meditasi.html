@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meditasi - Mental Health Tracker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(180deg,#FFF7FB,#FDEFF7,#F9E7F4);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+    background:#ffffff;
+    border-radius:30px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 12px 30px rgba(233,30,99,.12);
+}
+
+h1{
+    color:#6D4C57;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#9E7A88;
+    margin-bottom:25px;
+    line-height:1.5;
+}
+
+/* Lingkaran meditasi */
+.circle-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:20px 0 30px;
+}
+
+.circle{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #F8BBD0, #F48FB1);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    box-shadow:0 10px 25px rgba(244,143,177,.35);
+    transition: transform 4s ease-in-out;
+}
+
+.circle.expand{
+    transform: scale(1.25);
+}
+
+.instruction{
+    font-size:22px;
+    font-weight:bold;
+    color:#6D4C57;
+    margin-bottom:10px;
+}
+
+.timer{
+    font-size:40px;
+    color:#E91E63;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+button{
+    background:#F48FB1;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+button:hover{
+    background:#EC6F9D;
+}
+
+.secondary{
+    background:#F8BBD0;
+    color:#6D4C57;
+}
+
+.back{
+    width:100%;
+    margin-top:10px;
+}
+
+.quote{
+    margin-top:18px;
+    color:#8C6C79;
+    font-size:14px;
+    line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🧘 Meditasi</h1>
+    <p class="subtitle">
+        Ikuti ritme pernapasan selama beberapa menit.<br>
+        Tarik napas perlahan, tahan sejenak, lalu hembuskan dengan lembut.
+    </p>
+
+    <div class="circle-wrapper">
+        <div class="circle" id="circle">Tenang</div>
+    </div>
+
+    <div class="instruction" id="instruction">Siap Memulai</div>
+
+    <div class="timer" id="timer">05:00</div>
+
+    <div class="controls">
+        <button onclick="mulaiMeditasi()">▶ Mulai</button>
+        <button onclick="pauseMeditasi()">⏸ Pause</button>
+        <button onclick="resetMeditasi()" class="secondary">↺ Reset</button>
+    </div>
+
+    <button onclick="toggleMusik()">🎵 Putar / Hentikan Piano</button>
+
+    <div class="quote">
+        “Kamu tidak harus menyelesaikan semuanya hari ini.<br>
+        Bernapaslah, lalu lanjutkan satu langkah pada satu waktu.”
+    </div>
+
+    <button class="back" onclick="window.location.href='dashboard.html'">
+        ⬅ Kembali ke Dashboard
+    </button>
+
+</div>
+
+<script>
+let totalDetik = 300; // 5 menit
+let timerInterval = null;
+let breathingInterval = null;
+let audio = null;
+
+const timerEl = document.getElementById("timer");
+const instructionEl = document.getElementById("instruction");
+const circle = document.getElementById("circle");
+
+function formatWaktu(detik){
+    const m = Math.floor(detik / 60);
+    const s = detik % 60;
+    return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+}
+
+timerEl.textContent = formatWaktu(totalDetik);
+
+function mulaiMeditasi(){
+
+    if(timerInterval) return;
+
+    // Timer
+    timerInterval = setInterval(function(){
+
+        totalDetik--;
+
+        timerEl.textContent = formatWaktu(totalDetik);
+
+        if(totalDetik <= 0){
+
+            clearInterval(timerInterval);
+            clearInterval(breathingInterval);
+
+            timerInterval = null;
+            breathingInterval = null;
+
+            instructionEl.textContent = "Sesi Selesai";
+            circle.classList.remove("expand");
+
+            if(audio){
+                audio.pause();
+                audio.currentTime = 0;
+            }
+
+            alert("🌸 Meditasi selesai. Semoga harimu lebih tenang.");
+
+        }
+
+    },1000);
+
+    // Siklus pernapasan (4 detik tarik, 4 detik tahan, 4 detik buang)
+    let fase = 0;
+
+    function ubahFase(){
+
+        if(fase === 0){
+
+            instructionEl.textContent = "Tarik Napas";
+            circle.classList.add("expand");
+            circle.textContent = "Tarik";
+
+        }
+
+        else if(fase === 1){
+
+            instructionEl.textContent = "Tahan";
+            circle.textContent = "Tahan";
+
+        }
+
+        else{
+
+            instructionEl.textContent = "Buang Napas";
+            circle.classList.remove("expand");
+            circle.textContent = "Buang";
+
+        }
+
+        fase = (fase + 1) % 3;
+
+    }
+
+    ubahFase();
+
+    breathingInterval = setInterval(ubahFase,4000);
+
+}
+
+function pauseMeditasi(){
+
+    clearInterval(timerInterval);
+    clearInterval(breathingInterval);
+
+    timerInterval = null;
+    breathingInterval = null;
+
+    instructionEl.textContent = "Dijeda";
+
+}
+
+function resetMeditasi(){
+
+    pauseMeditasi();
+
+    totalDetik = 300;
+
+    timerEl.textContent = formatWaktu(totalDetik);
+
+    instructionEl.textContent = "Siap Memulai";
+
+    circle.classList.remove("expand");
+
+    circle.textContent = "Tenang";
+
+}
+
+function toggleMusik(){
+
+    if(!audio){
+        audio = new Audio("js/audio/piano.mp3");
+        audio.loop = true;
+    }
+
+    if(audio.paused){
+        audio.play();
+    }else{
+        audio.pause();
+    }
+
+}
+</script>
+
+</body>
+</html>

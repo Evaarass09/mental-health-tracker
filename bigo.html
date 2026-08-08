@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analisis Big O - Mental Health Tracker</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📈 Analisis Big O</h1>
+
+    <p class="subtitle">
+        Halaman ini menjelaskan kompleksitas waktu (Time Complexity)
+        dari setiap algoritma yang digunakan pada aplikasi
+        <b>Mental Health Tracker</b>.
+    </p>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Fitur</th>
+
+                <th>Algoritma</th>
+
+                <th>Big O</th>
+
+                <th>Penjelasan</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>💾 Simpan Mood</td>
+
+                <td>Array Push</td>
+
+                <td><b>O(1)</b></td>
+
+                <td>Menambahkan data baru ke akhir array.</td>
+
+            </tr>
+
+            <tr>
+
+                <td>📖 Tampilkan Riwayat</td>
+
+                <td>Traversal</td>
+
+                <td><b>O(n)</b></td>
+
+                <td>Membaca seluruh data mood satu per satu.</td>
+
+            </tr>
+
+            <tr>
+
+                <td>🔍 Cari Mood</td>
+
+                <td>Linear Search</td>
+
+                <td><b>O(n)</b></td>
+
+                <td>Mencari data secara berurutan hingga ditemukan.</td>
+
+            </tr>
+
+            <tr>
+
+                <td>⬆ Urutkan Stress</td>
+
+                <td>Bubble Sort</td>
+
+                <td><b>O(n²)</b></td>
+
+                <td>Membandingkan setiap elemen dengan elemen lainnya.</td>
+
+            </tr>
+
+            <tr>
+
+                <td>🕸 Graph Aktivitas</td>
+
+                <td>Adjacency List</td>
+
+                <td><b>O(V + E)</b></td>
+
+                <td>Menyimpan hubungan antar simpul (Vertex dan Edge).</td>
+
+            </tr>
+
+            <tr>
+
+                <td>🟢 BFS</td>
+
+                <td>Breadth First Search</td>
+
+                <td><b>O(V + E)</b></td>
+
+                <td>Mengunjungi semua simpul berdasarkan level.</td>
+
+            </tr>
+
+            <tr>
+
+                <td>🔴 DFS</td>
+
+                <td>Depth First Search</td>
+
+                <td><b>O(V + E)</b></td>
+
+                <td>Menelusuri simpul hingga cabang terdalam.</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <div class="bigo-card">
+
+        <h2>📚 Kesimpulan</h2>
+
+        <div class="algo">
+
+            <h3>O(1)</h3>
+
+            <p>Operasi sangat cepat karena tidak bergantung pada jumlah data.</p>
+
+        </div>
+
+        <div class="algo">
+
+            <h3>O(n)</h3>
+
+            <p>Waktu eksekusi bertambah seiring bertambahnya jumlah data.</p>
+
+        </div>
+
+        <div class="algo">
+
+            <h3>O(n²)</h3>
+
+            <p>Digunakan pada Bubble Sort karena terdapat dua perulangan (nested loop).</p>
+
+        </div>
+
+        <div class="algo">
+
+            <h3>O(V + E)</h3>
+
+            <p>Digunakan pada Graph, BFS, dan DFS karena mengunjungi seluruh simpul (Vertex) dan hubungan (Edge).</p>
+
+        </div>
+
+    </div>
+
+    <button onclick="window.location.href='dashboard.html'">
+        ⬅ Kembali ke Dashboard
+    </button>
+
+    <footer>
+
+        <hr style="margin:30px 0;">
+
+        <p><b>© 2026 Mental Health Tracker</b></p>
+
+        <p>Project Struktur Data & Algoritma</p>
+
+    </footer>
+
+</div>
+
+</body>
+</html>

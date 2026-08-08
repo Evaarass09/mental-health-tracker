@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistik Mood - Mental Health Tracker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(180deg,#FFF7FB,#FDEFF7,#F9E7F4);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+    background:#ffffff;
+    border-radius:30px;
+    padding:28px;
+    box-shadow:0 12px 30px rgba(233,30,99,.10);
+}
+
+h1{
+    color:#6D4C57;
+    text-align:center;
+    margin-bottom:8px;
+    font-size:32px;
+}
+
+.subtitle{
+    color:#9E7A88;
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.summary{
+    background: linear-gradient(135deg,#F8BBD0,#F48FB1);
+    border-radius:22px;
+    padding:20px;
+    color:white;
+    margin-bottom:24px;
+}
+
+.summary h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.summary p{
+    font-size:16px;
+    margin:4px 0;
+}
+
+.chart-card{
+    background:#FFF5F8;
+    border:1px solid #F8D7E6;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:16px;
+}
+
+.chart-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    color:#6D4C57;
+    font-weight:bold;
+}
+
+.bar{
+    width:100%;
+    height:16px;
+    background:#FDE7EF;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    width:0%;
+    border-radius:20px;
+    transition:width 1s ease;
+}
+
+.fill.bahagia{background:#F48FB1;}
+.fill.biasa{background:#F8BBD0;}
+.fill.sedih{background:#CE93D8;}
+.fill.marah{background:#E57373;}
+.fill.cemas{background:#9575CD;}
+
+.percent{
+    margin-top:8px;
+    text-align:right;
+    color:#8C6C79;
+    font-size:13px;
+}
+
+.bigo-card{
+    background:#FFF5F8;
+    border:1px solid #F8D7E6;
+    border-radius:20px;
+    padding:18px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.bigo-card h2{
+    color:#6D4C57;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.algo{
+    background:#fff;
+    border:1px solid #F8D7E6;
+    border-radius:16px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.algo h3{
+    color:#E91E63;
+    margin-bottom:8px;
+}
+
+.algo p{
+    color:#8C6C79;
+    margin-bottom:8px;
+}
+
+.algo ul{
+    padding-left:18px;
+    color:#6D4C57;
+}
+
+.algo li{
+    margin-bottom:5px;
+}
+
+button{
+    width:100%;
+    background:#F48FB1;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:14px;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#EC6F9D;
+}
+
+footer{
+    text-align:center;
+    margin-top:18px;
+    color:#A18894;
+    font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 Statistik Mood</h1>
+    <p class="subtitle">Analisis mood harian dan tingkat stres</p>
+
+    <div class="summary">
+        <h2>Ringkasan</h2>
+        <p>📝 Total Catatan: <span id="totalMood">0</span></p>
+        <p>📈 Rata-rata Stres: <span id="avgStress">0</span>/10</p>
+        <p>🔥 Streak Saat Ini: <span id="streak">0</span> hari</p>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <span>😊 Bahagia</span>
+            <span id="bahagiaCount">0</span>
+        </div>
+        <div class="bar"><div class="fill bahagia" id="bahagiaBar"></div></div>
+        <div class="percent" id="bahagiaPercent">0%</div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <span>😐 Biasa</span>
+            <span id="biasaCount">0</span>
+        </div>
+        <div class="bar"><div class="fill biasa" id="biasaBar"></div></div>
+        <div class="percent" id="biasaPercent">0%</div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <span>😢 Sedih</span>
+            <span id="sedihCount">0</span>
+        </div>
+        <div class="bar"><div class="fill sedih" id="sedihBar"></div></div>
+        <div class="percent" id="sedihPercent">0%</div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <span>😡 Marah</span>
+            <span id="marahCount">0</span>
+        </div>
+        <div class="bar"><div class="fill marah" id="marahBar"></div></div>
+        <div class="percent" id="marahPercent">0%</div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <span>😰 Cemas</span>
+            <span id="cemasCount">0</span>
+        </div>
+        <div class="bar"><div class="fill cemas" id="cemasBar"></div></div>
+        <div class="percent" id="cemasPercent">0%</div>
+    </div>
+
+    <div class="bigo-card">
+        <h2>⚡ Analisis Algoritma (Big O)</h2>
+
+        <div class="algo">
+            <h3>🔍 Linear Search</h3>
+            <p>Digunakan pada fitur <b>Cari Mood</b>.</p>
+            <ul>
+                <li>Best Case : <b>O(1)</b></li>
+                <li>Average Case : <b>O(n)</b></li>
+                <li>Worst Case : <b>O(n)</b></li>
+            </ul>
+        </div>
+
+        <div class="algo">
+            <h3>📊 Bubble Sort</h3>
+            <p>Digunakan pada fitur <b>Urutkan Berdasarkan Stress</b>.</p>
+            <ul>
+                <li>Best Case : <b>O(n)</b></li>
+                <li>Average Case : <b>O(n²)</b></li>
+                <li>Worst Case : <b>O(n²)</b></li>
+            </ul>
+        </div>
+    </div>
+
+    <button onclick="window.location.href='dashboard.html'">
+        ⬅ Kembali ke Dashboard
+    </button>
+
+    <footer>© 2026 Mental Health Tracker</footer>
+
+</div>
+
+<script>
+function hitungStreak(dataMood){
+
+    if(dataMood.length===0) return 0;
+
+    let tanggal=[...new Set(dataMood.map(item=>item.tanggal))];
+    tanggal.sort();
+
+    let streak=1;
+
+    for(let i=tanggal.length-1;i>0;i--){
+
+        let t1=new Date(tanggal[i]);
+        let t2=new Date(tanggal[i-1]);
+
+        let selisih=(t1-t2)/(1000*60*60*24);
+
+        if(selisih===1){
+            streak++;
+        }else{
+            break;
+        }
+
+    }
+
+    return streak;
+}
+
+function tampilStatistik(){
+
+    let dataMood=JSON.parse(localStorage.getItem("mood")) || [];
+
+    let hasil={
+        bahagia:0,
+        biasa:0,
+        sedih:0,
+        marah:0,
+        cemas:0
+    };
+
+    let totalStress=0;
+
+    dataMood.forEach(function(item){
+
+        let mood=item.mood.toLowerCase();
+
+        totalStress+=parseInt(item.stress)||0;
+
+        if(mood.includes("bahagia")) hasil.bahagia++;
+        else if(mood.includes("biasa")) hasil.biasa++;
+        else if(mood.includes("sedih")) hasil.sedih++;
+        else if(mood.includes("marah")) hasil.marah++;
+        else if(mood.includes("cemas")) hasil.cemas++;
+
+    });
+
+    let total=dataMood.length;
+    let avgStress=total===0 ? 0 : (totalStress/total).toFixed(1);
+
+    document.getElementById("totalMood").innerHTML=total;
+    document.getElementById("avgStress").innerHTML=avgStress;
+    document.getElementById("streak").innerHTML=hitungStreak(dataMood);
+
+    function update(id,count){
+
+        let percent=total===0 ? 0 : (count/total*100);
+
+        document.getElementById(id+"Count").innerHTML=count;
+        document.getElementById(id+"Percent").innerHTML=percent.toFixed(0)+"%";
+        document.getElementById(id+"Bar").style.width=percent+"%";
+    }
+
+    update("bahagia",hasil.bahagia);
+    update("biasa",hasil.biasa);
+    update("sedih",hasil.sedih);
+    update("marah",hasil.marah);
+    update("cemas",hasil.cemas);
+}
+
+window.onload=tampilStatistik;
+</script>
+
+</body>
+</html>

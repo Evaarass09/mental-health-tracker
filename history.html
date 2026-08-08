@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Riwayat Mood</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📖 Riwayat Mood</h1>
+
+    <p>
+        Lihat seluruh riwayat mood yang pernah kamu catat,
+        cari data dengan cepat, urutkan berdasarkan tingkat stress,
+        atau hapus data yang sudah tidak diperlukan.
+    </p>
+
+    <input
+        type="text"
+        id="searchMood"
+        placeholder="🔍 Cari mood...">
+
+    <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin:20px 0;">
+
+        <button onclick="cariMood()">
+            🔍 Cari
+        </button>
+
+        <button onclick="urutStress()">
+            ⬆ Urutkan Stress
+        </button>
+
+        <button onclick="tampilMood()">
+            🔄 Refresh
+        </button>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Tanggal</th>
+                <th>Mood</th>
+                <th>Stress</th>
+                <th>Catatan</th>
+                <th>Aksi</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tabelMood">
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a href="dashboard.html">
+
+        <button>
+
+            ⬅ Kembali
+
+        </button>
+
+    </a>
+
+    <footer>
+
+        <hr style="margin:30px 0;">
+
+        <p>© 2026 Mental Health Tracker</p>
+
+        <p>Project Struktur Data & Algoritma</p>
+
+    </footer>
+
+</div>
+
+<script src="js/script.js"></script>
+
+<script>
+
+tampilMood();
+
+</script>
+
+</body>
+
+</html>

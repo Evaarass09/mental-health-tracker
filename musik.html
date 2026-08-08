@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musik Relaksasi - Mental Health Tracker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(180deg,#FFF7FB,#FDEFF7,#F9E7F4);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+    background:#ffffff;
+    border-radius:30px;
+    padding:28px;
+    box-shadow:0 12px 30px rgba(233,30,99,.10);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:24px;
+}
+
+.header h1{
+    color:#6D4C57;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#9E7A88;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.status{
+    background:#FFF5F8;
+    border:1px solid #F8D7E6;
+    border-radius:14px;
+    padding:12px;
+    text-align:center;
+    color:#6D4C57;
+    font-weight:600;
+    margin-bottom:22px;
+}
+
+.music-card{
+    background:#FFF5F8;
+    border:1px solid #F8D7E6;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.music-card h3{
+    color:#6D4C57;
+    margin-bottom:6px;
+    font-size:22px;
+}
+
+.music-card p{
+    color:#8C6C79;
+    font-size:13px;
+    margin-bottom:14px;
+    line-height:1.4;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+}
+
+button{
+    background:#F48FB1;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+button:hover{
+    background:#EC6F9D;
+}
+
+.stop{
+    background:#F8BBD0;
+    color:#6D4C57;
+}
+
+.stop:hover{
+    background:#F48FB1;
+    color:white;
+}
+
+.back{
+    width:100%;
+    margin-top:10px;
+    background:#E91E63;
+}
+
+.back:hover{
+    background:#D81B60;
+}
+
+footer{
+    text-align:center;
+    margin-top:20px;
+    color:#A18894;
+    font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🎧 Musik Relaksasi</h1>
+        <p>Pilih suara yang membuatmu lebih tenang, fokus, dan nyaman.</p>
+    </div>
+
+    <div class="status" id="statusMusik">
+        Belum ada musik yang diputar
+    </div>
+
+    <div class="music-card">
+        <h3>🌧️ Hujan</h3>
+        <p>Suara hujan lembut untuk membantu relaksasi dan tidur lebih nyenyak.</p>
+        <div class="buttons">
+            <button onclick="putar('js/audio/hujan.mp3','Hujan')">▶ Putar</button>
+            <button class="stop" onclick="stopMusik()">⏹ Stop</button>
+        </div>
+    </div>
+
+    <div class="music-card">
+        <h3>🌊 Ombak</h3>
+        <p>Suara ombak pantai yang menenangkan dan membantu mengurangi stres.</p>
+        <div class="buttons">
+            <button onclick="putar('js/audio/ombak.mp3','Ombak')">▶ Putar</button>
+            <button class="stop" onclick="stopMusik()">⏹ Stop</button>
+        </div>
+    </div>
+
+    <div class="music-card">
+        <h3>🌲 Hutan</h3>
+        <p>Suara alam dan burung di tengah hutan untuk meningkatkan fokus dan ketenangan.</p>
+        <div class="buttons">
+            <button onclick="putar('js/audio/hutan.mp3','Hutan')">▶ Putar</button>
+            <button class="stop" onclick="stopMusik()">⏹ Stop</button>
+        </div>
+    </div>
+
+    <div class="music-card">
+        <h3>🎹 Piano</h3>
+        <p>Melodi piano lembut untuk meditasi, belajar, atau relaksasi.</p>
+        <div class="buttons">
+            <button onclick="putar('js/audio/piano.mp3','Piano')">▶ Putar</button>
+            <button class="stop" onclick="stopMusik()">⏹ Stop</button>
+        </div>
+    </div>
+
+    <button class="back" onclick="window.location.href='dashboard.html'">
+        ⬅ Kembali ke Dashboard
+    </button>
+
+    <footer>
+        © 2026 Mental Health Tracker
+    </footer>
+
+</div>
+
+<script>
+let audio = new Audio();
+
+function putar(file,nama){
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    audio.src = file;
+    audio.loop = true;
+    audio.volume = 1.0;
+
+    audio.play()
+    .then(() => {
+        document.getElementById("statusMusik").innerHTML =
+            "🎵 Sedang memutar: <b>" + nama + "</b>";
+    })
+    .catch((err) => {
+        console.error(err);
+        alert("Gagal memutar audio.\nPastikan file MP3 ada di folder js/audio/");
+    });
+
+}
+
+function stopMusik(){
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    document.getElementById("statusMusik").innerHTML =
+        "⏹ Musik dihentikan";
+
+}
+</script>
+
+</body>
+</html>
